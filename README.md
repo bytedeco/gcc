@@ -8,8 +8,8 @@ This repository contains the JavaCPP Presets module for
 
 - libgccjit 10.2.0: https://gcc.gnu.org/wiki/JIT
 
-Please refer to the [JavaCPP Presets README.md] file for more detailed 
-information about the JavaCPP Presets.
+Please refer to the [JavaCPP Presets README.md][javacpp-presets] file for more 
+detailed information about the JavaCPP Presets.
 
 > This preset is in development, snapshot artifacts and javadocs are coming 
 > soon.
