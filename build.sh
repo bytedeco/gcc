@@ -23,7 +23,7 @@ case $PLATFORM in
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
-    cd ..build
+    cd ../build
 
     ../gcc-$GCC_VERSION/configure \
       --prefix=$GCC_INSTALL_PREFIX \
