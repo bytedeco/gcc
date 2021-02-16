@@ -17,6 +17,27 @@ mkdir build install
 GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
+  linux-ppc64le)
+    export CC="powerpc64le-linux-gnu-gcc -m64 -fPIC"
+    export CXX="powerpc64le-linux-gnu-g++ -m64 -fPIC"
+
+    cd gcc-$GCC_VERSION
+    ./contrib/download_prerequisites
+    cd ../build
+
+    ../gcc-$GCC_VERSION/configure \
+      --host=powerpc64le-linux-gnu \
+      --target=powerpc64le-linux-gnu \
+      --prefix=$INSTALL_PREFIX \
+      --enable-checking=release \
+      --enable-languages=jit \
+      --enable-host-shared \
+      --disable-bootstrap \
+      --disable-multilib \
+      --disable-nls
+    make -j $MAKEJ
+    make install
+    ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
     export CXX="g++ -m64 -fPIC"
