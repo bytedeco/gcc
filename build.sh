@@ -18,8 +18,11 @@ GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
   linux-ppc64le)
-    export CC="powerpc64le-linux-gnu-gcc -m64 -fPIC"
-    export CXX="powerpc64le-linux-gnu-g++ -m64 -fPIC"
+    # this build runs in the ubuntu container
+    apt install gcc-10-cross
+
+    export CC="powerpc64le-linux-gnu-gcc-10 -m64 -fPIC"
+    export CXX="powerpc64le-linux-gnu-g++-10 -m64 -fPIC"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
