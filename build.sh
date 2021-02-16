@@ -35,6 +35,8 @@ case $PLATFORM in
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
+    make -j $MAKEJ
+    make install
     ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
