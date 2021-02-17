@@ -18,11 +18,8 @@ GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
   linux-ppc64le)
-    # this build runs in the ubuntu container
-    apt install gcc-10-cross
-
-    export CC="powerpc64le-linux-gnu-gcc-10 -m64 -fPIC"
-    export CXX="powerpc64le-linux-gnu-g++-10 -m64 -fPIC"
+    export CC="gcc -m64 -fPIC"
+    export CXX="g++ -m64 -fPIC"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
@@ -33,13 +30,17 @@ case $PLATFORM in
       --target=powerpc64le-linux-gnu \
       --prefix=$INSTALL_PREFIX \
       --enable-checking=release \
-      --enable-languages=jit \
+      --enable-languages=c,c++,jit \
       --enable-host-shared \
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
     make -j $MAKEJ
     make install
+
+    cd $GCC_INSTALL_PREFIX/lib
+    tree
+    file libgccjit.so
     ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
