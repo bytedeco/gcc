@@ -61,7 +61,7 @@ runs:
       shell: bash
       run: |
         git --version
-        $PREFIX-gcc --version
+        $PREFIX-gcc-10 --version
         cmake --version
         gradle --version
         df -h
