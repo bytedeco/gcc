@@ -9,18 +9,25 @@ runs:
         cd /root
         export DEBIAN_FRONTEND=noninteractive
 
+        apt-get update
+        apt-get install -y python2.7 pkg-config ccache default-jre-headless openjdk-8-jdk-headless python python3-dev python3-pip git file unzip tar bzip2 gzip patch make libtool bison flex perl nasm curl cmake
+        apt-get install -y libbz2-dev zlib1g-dev
+
         case "$CI_DEPLOY_PLATFORM" in
           linux-armhf)
             export ARCH=armhf
             export PREFIX=arm-linuxgnueabihf
+            apt-get install -y gcc-10-aarch64-linux-gnu g++-10-aarch64-linux-gnu binutils-aarch64-linux-gnu
             ;;
           linux-arm64)
             export ARCH=arm64
             export PREFIX=aarch64-linux-gnu
+            apt-get install -y gcc-10-arm-linux-gnueabihf g++-10-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
             ;;
           linux-ppc64le)
             export ARCH=ppc64el
             export PREFIX=powerpc64le-linux-gnu
+            apt-get install -y gcc-10-powerpc64le-linux-gnu g++-10-powerpc64le-linux-gnu binutils-powerpc64le-linux-gnu
             ;;
           *)
             echo "Platform \"$CI_DEPLOY_PLATFORM\" is not supported."
@@ -31,14 +38,6 @@ runs:
         echo "ARCH=$ARCH" >> $GITHUB_ENV
         echo "PREFIX=$PREFIX" >> $GITHUB_ENV
 
-        apt-get update
-        apt-get install -y python2.7 pkg-config ccache clang default-jre-headless openjdk-8-jdk-headless ant python python3-dev python3-pip swig git file wget unzip tar bzip2 gzip patch autoconf-archive autogen automake make libtool bison flex perl nasm curl cmake
-        apt-get install -y libusb-dev libffi-dev libbz2-dev zlib1g-dev
-        apt-get install -y gcc-10-aarch64-linux-gnu gcc-10-arm-linux-gnueabihf gcc-10-powerpc64le-linux-gnu
-        apt-get install -y g++-10-aarch64-linux-gnu g++-10-arm-linux-gnueabihf g++-10-powerpc64le-linux-gnu
-        apt-get install -y binutils-aarch64-linux-gnu binutils-arm-linux-gnueabihf binutils-powerpc64le-linux-gnu
-
-        find /usr/lib/jvm/default-java/
         curl -LO https://services.gradle.org/distributions/gradle-6.7.1-bin.zip
         unzip gradle-6.7.1-bin.zip -d /opt/
         ln -sf /opt/gradle-6.7.1/bin/gradle /usr/bin/gradle
@@ -65,6 +64,7 @@ runs:
         $PREFIX-gcc-10 --version
         cmake --version
         gradle --version
+        java --version
         df -h
 
         export MAKEJ=$(getconf _NPROCESSOR_ONLN)
