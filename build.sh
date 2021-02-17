@@ -35,7 +35,7 @@ case $PLATFORM in
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
-    make -j $MAKEJ
+    make
     make install
     ;;
   linux-x86_64)
