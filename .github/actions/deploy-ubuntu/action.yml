@@ -65,6 +65,9 @@ runs:
       run: |
         git --version
         $PREFIX-gcc-10 --version
+        $PREFIX-g++-10 --version
+        $PREFIX-gcc --version
+        $PREFIX-g++ --version
         cmake --version
         gradle --version
         java --version
