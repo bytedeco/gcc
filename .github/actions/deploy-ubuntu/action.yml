@@ -28,6 +28,9 @@ runs:
             export ARCH=ppc64el
             export PREFIX=powerpc64le-linux-gnu
             apt-get install -y gcc-10-powerpc64le-linux-gnu g++-10-powerpc64le-linux-gnu binutils-powerpc64le-linux-gnu
+            rm -rf /usr/bin/aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-g++
+            ln -s $(which aarch64-linux-gnu-gcc-10) /usr/bin/aarch64-linux-gnu-gcc
+            ln -s $(which aarch64-linux-gnu-g++-10) /usr/bin/aarch64-linux-gnu-g++
             ;;
           *)
             echo "Platform \"$CI_DEPLOY_PLATFORM\" is not supported."
