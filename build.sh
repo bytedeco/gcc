@@ -35,10 +35,9 @@ case $PLATFORM in
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
-    make
+    make -j $MAKEJ
     make install
-    tree $GCC_INSTALL_PREFIX
-    find $GCC_INSTALL_PREFIX -type f -name "*.so" -exec file "{}" \;
+    find $GCC_INSTALL_PREFIX -name "*.so" -exec file "{}" \;
     ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
