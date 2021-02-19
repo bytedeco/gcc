@@ -22,8 +22,8 @@ case $PLATFORM in
     ln -s $(which powerpc64le-linux-gnu-gcc-10) /usr/bin/powerpc64le-linux-gnu-gcc
     ln -s $(which powerpc64le-linux-gnu-g++-10) /usr/bin/powerpc64le-linux-gnu-g++
 
-    export CC="gcc -m64 -fPIC"
-    export CXX="g++ -m64 -fPIC"
+    export CC="powerpc64le-linux-gnu-gcc -m64 -fPIC"
+    export CXX="powerpc64le-linux-gnu-g++ -m64 -fPIC"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
@@ -39,7 +39,7 @@ case $PLATFORM in
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
-    make -j $MAKEJ
+    make -j 2
     make install
     ;;
   linux-x86_64)
