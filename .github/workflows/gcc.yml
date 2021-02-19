@@ -14,7 +14,7 @@ env:
 jobs:
   linux-ppc64le:
     runs-on: ubuntu-16.04
-    container: ubuntu:focal
+    container: ubuntu:xenial
     steps:
       - uses: supergrecko/gcc/.github/actions/deploy-ubuntu@platform-linux-ppcle64
   linux-x86_64:

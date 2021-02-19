@@ -18,6 +18,10 @@ GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
   linux-ppc64le)
+    rm -rf /usr/bin/powerpc64le-linux-gnu-gcc /usr/bin/powerpc64le-linux-gnu-g++
+    ln -s $(which powerpc64le-linux-gnu-gcc-10) /usr/bin/powerpc64le-linux-gnu-gcc
+    ln -s $(which powerpc64le-linux-gnu-g++-10) /usr/bin/powerpc64le-linux-gnu-g++
+
     export CC="gcc -m64 -fPIC"
     export CXX="g++ -m64 -fPIC"
 
@@ -37,7 +41,6 @@ case $PLATFORM in
       --disable-nls
     make -j $MAKEJ
     make install
-    find $GCC_INSTALL_PREFIX -name "*.so" -exec file "{}" \;
     ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
