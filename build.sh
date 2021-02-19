@@ -18,8 +18,8 @@ GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
   linux-ppc64le)
-    export CC="powerpc64le-linux-gnu-gcc-10"
-    export CXX="powerpc64le-linux-gnu-g++-10"
+    export CC="gcc -m64 -fPIC"
+    export CXX="g++ -m64 -fPIC"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
