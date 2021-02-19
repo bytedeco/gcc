@@ -18,10 +18,6 @@ GCC_INSTALL_PREFIX=$(pwd)/install
 
 case $PLATFORM in
   linux-ppc64le)
-    rm -rf /usr/bin/powerpc64le-linux-gnu-gcc /usr/bin/powerpc64le-linux-gnu-g++
-    ln -s $(which powerpc64le-linux-gnu-gcc-10) /usr/bin/powerpc64le-linux-gnu-gcc
-    ln -s $(which powerpc64le-linux-gnu-g++-10) /usr/bin/powerpc64le-linux-gnu-g++
-
     export CC="powerpc64le-linux-gnu-gcc -m64 -fPIC"
     export CXX="powerpc64le-linux-gnu-g++ -m64 -fPIC"
 

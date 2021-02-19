@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-16.04
     container: ubuntu:focal
     steps:
-      - uses: supergrecko/gcc/.github/actions/deploy-focal@platform-linux-ppcle64
+      - uses: supergrecko/gcc/.github/actions/deploy-focal@actions
   linux-x86_64:
     runs-on: ubuntu-16.04
     container: centos:6
