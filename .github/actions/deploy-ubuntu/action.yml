@@ -10,7 +10,7 @@ runs:
         export DEBIAN_FRONTEND=noninteractive
 
         apt-get update
-        apt-get install -y python2.7 pkg-config ccache default-jre-headless openjdk-8-jdk-headless python python3-dev python3-pip git file unzip tar bzip2 gzip patch make libtool bison flex perl nasm curl cmake
+        apt-get install -y python2.7 pkg-config ccache default-jre-headless openjdk-8-jdk-headless python python3-dev python3-pip git file unzip tar bzip2 gzip patch make libtool bison flex perl nasm curl cmake tree
         apt-get install -y libbz2-dev zlib1g-dev
 
         case "$CI_DEPLOY_PLATFORM" in
