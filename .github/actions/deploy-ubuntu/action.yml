@@ -84,7 +84,7 @@ runs:
         export HOME=/root
 
         echo Executing Gradle $GRADLE_TASK ${{ matrix.options }} on $MAKEJ processors
-        export GRADLE_OPTIONS="-Dorg.gradle.jvmargs=-Xmx2048m -PjavacppPlatform=$CI_DEPLOY_PLATFORM -Dplatform.compiler=$PREFIX-g++ -PjavacppPlatformExtension=${{ matrix.ext }} ${{ matrix.options }} --info"
+        export GRADLE_OPTIONS="-Dorg.gradle.jvmargs=-Xmx2048m -PjavacppPlatform=$CI_DEPLOY_PLATFORM -Dorg.bytedeco.javacpp.platform.compiler=$PREFIX-g++ -PjavacppPlatformExtension=${{ matrix.ext }} ${{ matrix.options }} --info"
         gradle clean build $GRADLE_OPTIONS -b $CI_DEPLOY_MODULE/build.gradle
         echo Publishing only now to help avoid race conditions with Gradle
         gradle $GRADLE_TASK $GRADLE_OPTIONS -b $CI_DEPLOY_MODULE/build.gradle --refresh-dependencies
