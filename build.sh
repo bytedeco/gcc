@@ -28,7 +28,7 @@ case $PLATFORM in
     ../gcc-$GCC_VERSION/configure \
       --host=powerpc64le-linux-gnu \
       --target=powerpc64le-linux-gnu \
-      --prefix=$INSTALL_PREFIX \
+      --prefix=$GCC_INSTALL_PREFIX \
       --enable-checking=release \
       --enable-languages=jit \
       --enable-host-shared \
@@ -37,6 +37,8 @@ case $PLATFORM in
       --disable-nls
     make
     make install
+    tree $GCC_INSTALL_PREFIX
+    find $GCC_INSTALL_PREFIX -type f -name "*.so" -exec file "{}" \;
     ;;
   linux-x86_64)
     export CC="gcc -m64 -fPIC"
