@@ -24,6 +24,7 @@ The preset currently supports the following platforms (more platforms coming
 soon)
 
 - Linux (x86-64)
+- Linux (PowerPC 64-bit little endian)
 
 [javacpp-presets]: https://github.com/bytedeco/javacpp-presets#readme
 [libgccjit]: https://gcc.gnu.org/wiki/JIT
