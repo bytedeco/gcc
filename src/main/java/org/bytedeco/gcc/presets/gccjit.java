@@ -11,7 +11,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
     value = {
         @Platform(include = "<libgccjit.h>", link = "gccjit@.0")
     },
-    target = "org.bytedeco.gcc",
+    target = "org.bytedeco.gcc.gccjit",
     global = "org.bytedeco.gcc.global.gccjit"
 )
 public class gccjit implements InfoMapper {
