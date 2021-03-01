@@ -11,14 +11,15 @@ group = "org.bytedeco"
 version = "10.2.0-$javacppVersion"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
     api "org.bytedeco:javacpp:$javacppVersion"
+    javacppPlatform "org.bytedeco:javacpp-platform:$javacppVersion"
     javacppPlatform "org.bytedeco:gcc:$version:linux-x86_64"
-    javacppPlatform "org.bytedeco:gcc:$version:linux-ppc64le"
 
     testRuntimeOnly "org.bytedeco:javacpp:$javacppVersion:$javacppPlatform"
     testImplementation "junit:junit:4.13.1"
