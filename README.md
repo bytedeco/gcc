@@ -24,6 +24,7 @@ The preset currently supports the following platforms (more platforms coming
 soon)
 
 - Linux (x86-64)
+- Linux (x86)  
 - Linux (PowerPC 64-bit little endian) (experimental)
 
 Experimental builds are builds run in a custom build environment, separated 

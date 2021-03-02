@@ -20,6 +20,7 @@ dependencies {
     api "org.bytedeco:javacpp:$javacppVersion"
     javacppPlatform "org.bytedeco:javacpp-platform:$javacppVersion"
     javacppPlatform "org.bytedeco:gcc:$version:linux-x86_64"
+    javacppPlatform "org.bytedeco:gcc:$version:linux-x86"
 
     testRuntimeOnly "org.bytedeco:javacpp:$javacppVersion:$javacppPlatform"
     testImplementation "junit:junit:4.13.1"
