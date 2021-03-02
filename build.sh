@@ -41,6 +41,7 @@ case $PLATFORM in
   linux-x86)
     export CC="gcc -m32 -fPIC"
     export CXX="g++ -m32 -fPIC"
+    export LDFLAGS="-m32"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
@@ -52,7 +53,7 @@ case $PLATFORM in
       --enable-languages=jit,c,c++ \
       --enable-host-shared \
       --disable-bootstrap \
-      --disable-multilib \
+      --enable-multilib \
       --disable-nls
     make -j $MAKEJ
     make install
