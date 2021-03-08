@@ -35,7 +35,7 @@ case $PLATFORM in
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
-    make -j 2
+    make -j $MAKEJ
     make install
     ;;
   linux-x86)
@@ -53,7 +53,7 @@ case $PLATFORM in
       --enable-languages=jit,c,c++ \
       --enable-host-shared \
       --disable-bootstrap \
-      --enable-multilib \
+      --disable-multilib \
       --disable-nls
     make -j $MAKEJ
     make install
