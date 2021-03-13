@@ -1,0 +1,18 @@
+plugins {
+    id("application")
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+
+dependencies {
+    implementation("org.bytedeco:gcc-platform:10.2.0-1.5.5-SNAPSHOT")
+    implementation("net.java.dev.jna:jna:5.5.0")
+}
+
+application {
+    mainClass = 'JitExecution'
+}
