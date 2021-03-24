@@ -1,4 +1,5 @@
 
+- Update version to 1.5.6-SNAPSHOT
 - Add example project which generates a dynamic library using gccjit
 - Adjust generated sources path to match other JavaCPP presets
 - Add experimental build for Linux ppc64le ([pull #5](https://github.com/bytedeco/gcc/pull/5))
