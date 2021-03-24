@@ -39,9 +39,8 @@ case $PLATFORM in
     make install
     ;;
   linux-x86)
-    export CC="gcc -m32 -fPIC"
-    export CXX="g++ -m32 -fPIC"
-    export LDFLAGS="-m32"
+    export CC="gcc -m32"
+    export CXX="g++ -m32"
 
     cd gcc-$GCC_VERSION
     ./contrib/download_prerequisites
