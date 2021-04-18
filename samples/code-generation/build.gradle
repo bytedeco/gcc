@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.bytedeco:gcc-platform:10.2.0-1.5.5-SNAPSHOT")
+    implementation("org.bytedeco:gcc-platform:10.3.0-1.5.5-SNAPSHOT")
 }
 
 application {

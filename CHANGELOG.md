@@ -1,4 +1,5 @@
 
+- Upgrade preset to GCC 10.3
 - Update version to 1.5.6-SNAPSHOT
 - Add example project which generates a dynamic library using gccjit
 - Adjust generated sources path to match other JavaCPP presets

@@ -6,7 +6,7 @@ Build status: ![gcc](https://github.com/supergrecko/gcc/workflows/gcc/badge.svg)
 
 This repository contains the JavaCPP Presets module for
 
-- libgccjit 10.2.0: [https://gcc.gnu.org/wiki/JIT][libgccjit]
+- libgccjit 10.3.0: [https://gcc.gnu.org/wiki/JIT][libgccjit]
 
 Please refer to the [JavaCPP Presets README.md][javacpp-presets] file for more 
 detailed information about the JavaCPP Presets.
@@ -55,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.bytedeco:gcc-platform:10.2.0-1.5.5-SNAPSHOT")
+    implementation("org.bytedeco:gcc-platform:10.3.0-1.5.5-SNAPSHOT")
     // JNA required dependency for calling functions by address
     implementation("net.java.dev.jna:jna:5.5.0")
 }
