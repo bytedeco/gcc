@@ -25,6 +25,7 @@ import static org.bytedeco.gcc.global.gccjit.*;
 	     +- gcc_jit_lvalue
 		 +- gcc_jit_param
 	 +- gcc_jit_case
+	 +- gcc_jit_extended_asm
 */
 @Opaque @Properties(inherit = org.bytedeco.gcc.presets.gccjit.class)
 public class gcc_jit_object extends Pointer {

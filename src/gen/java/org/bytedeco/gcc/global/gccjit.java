@@ -14,7 +14,7 @@ public class gccjit extends org.bytedeco.gcc.presets.gccjit {
 // Parsed from <libgccjit.h>
 
 /* A pure C API to enable client code to embed GCC as a JIT-compiler.
-   Copyright (C) 2013-2020 Free Software Foundation, Inc.
+   Copyright (C) 2013-2021 Free Software Foundation, Inc.
 
 This file is part of GCC.
 
@@ -75,6 +75,9 @@ along with GCC; see the file COPYING3.  If not see
 
 
 // Targeting ../gccjit/gcc_jit_case.java
+
+
+// Targeting ../gccjit/gcc_jit_extended_asm.java
 
 
 
@@ -762,6 +765,20 @@ public static native gcc_jit_lvalue gcc_jit_context_new_global(gcc_jit_context c
 			    @Cast("gcc_jit_global_kind") int kind,
 			    gcc_jit_type type,
 			    String name);
+
+// #define LIBGCCJIT_HAVE_gcc_jit_global_set_initializer
+
+/* Set an initial value for a global, which must be an array of
+   integral type.  Return the global itself.
+
+   This API entrypoint was added in LIBGCCJIT_ABI_14; you can test for its
+   presence using
+     #ifdef LIBGCCJIT_HAVE_gcc_jit_global_set_initializer
+*/
+
+public static native gcc_jit_lvalue gcc_jit_global_set_initializer(gcc_jit_lvalue global,
+				@Const Pointer blob,
+				@Cast("size_t") long num_bytes);
 
 /* Upcasting.  */
 public static native gcc_jit_object gcc_jit_lvalue_as_object(gcc_jit_lvalue lvalue);
@@ -1462,7 +1479,7 @@ public static native gcc_jit_rvalue gcc_jit_context_new_rvalue_from_vector(gcc_j
 
 // #define LIBGCCJIT_HAVE_gcc_jit_version
 
-/* Functions to retrive libgccjit version.
+/* Functions to retrieve libgccjit version.
    Analogous to __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__ in C code.
 
    These API entrypoints were added in LIBGCCJIT_ABI_13; you can test for their
@@ -1472,6 +1489,121 @@ public static native gcc_jit_rvalue gcc_jit_context_new_rvalue_from_vector(gcc_j
 public static native int gcc_jit_version_major();
 public static native int gcc_jit_version_minor();
 public static native int gcc_jit_version_patchlevel();
+
+/**********************************************************************
+ Asm support.
+ **********************************************************************/
+
+/* Functions for adding inline assembler code, analogous to GCC's
+   "extended asm" syntax.
+
+   See https://gcc.gnu.org/onlinedocs/gcc/Using-Assembly-Language-with-C.html
+
+   These API entrypoints were added in LIBGCCJIT_ABI_15; you can test for their
+   presence using
+     #ifdef LIBGCCJIT_HAVE_ASM_STATEMENTS
+*/
+
+// #define LIBGCCJIT_HAVE_ASM_STATEMENTS
+
+/* Create a gcc_jit_extended_asm for an extended asm statement
+   with no control flow (i.e. without the goto qualifier).
+
+   The asm_template parameter  corresponds to the AssemblerTemplate
+   within C's extended asm syntax.  It must be non-NULL.  */
+
+public static native gcc_jit_extended_asm gcc_jit_block_add_extended_asm(gcc_jit_block block,
+				gcc_jit_location loc,
+				@Cast("const char*") BytePointer asm_template);
+public static native gcc_jit_extended_asm gcc_jit_block_add_extended_asm(gcc_jit_block block,
+				gcc_jit_location loc,
+				String asm_template);
+
+/* Create a gcc_jit_extended_asm for an extended asm statement
+   that may perform jumps, and use it to terminate the given block.
+   This is equivalent to the "goto" qualifier in C's extended asm
+   syntax.  */
+
+public static native gcc_jit_extended_asm gcc_jit_block_end_with_extended_asm_goto(gcc_jit_block block,
+					  gcc_jit_location loc,
+					  @Cast("const char*") BytePointer asm_template,
+					  int num_goto_blocks,
+					  @Cast("gcc_jit_block**") PointerPointer goto_blocks,
+					  gcc_jit_block fallthrough_block);
+public static native gcc_jit_extended_asm gcc_jit_block_end_with_extended_asm_goto(gcc_jit_block block,
+					  gcc_jit_location loc,
+					  @Cast("const char*") BytePointer asm_template,
+					  int num_goto_blocks,
+					  @ByPtrPtr gcc_jit_block goto_blocks,
+					  gcc_jit_block fallthrough_block);
+public static native gcc_jit_extended_asm gcc_jit_block_end_with_extended_asm_goto(gcc_jit_block block,
+					  gcc_jit_location loc,
+					  String asm_template,
+					  int num_goto_blocks,
+					  @ByPtrPtr gcc_jit_block goto_blocks,
+					  gcc_jit_block fallthrough_block);
+
+/* Upcasting from extended asm to object.  */
+
+public static native gcc_jit_object gcc_jit_extended_asm_as_object(gcc_jit_extended_asm ext_asm);
+
+/* Set whether the gcc_jit_extended_asm has side-effects, equivalent to
+   the "volatile" qualifier in C's extended asm syntax.  */
+
+public static native void gcc_jit_extended_asm_set_volatile_flag(gcc_jit_extended_asm ext_asm,
+					int flag);
+
+/* Set the equivalent of the "inline" qualifier in C's extended asm
+   syntax.  */
+
+public static native void gcc_jit_extended_asm_set_inline_flag(gcc_jit_extended_asm ext_asm,
+				      int flag);
+
+/* Add an output operand to the extended asm statement.
+   "asm_symbolic_name" can be NULL.
+   "constraint" and "dest" must be non-NULL.
+   This function can't be called on an "asm goto" as such instructions
+   can't have outputs  */
+
+public static native void gcc_jit_extended_asm_add_output_operand(gcc_jit_extended_asm ext_asm,
+					 @Cast("const char*") BytePointer asm_symbolic_name,
+					 @Cast("const char*") BytePointer constraint,
+					 gcc_jit_lvalue dest);
+public static native void gcc_jit_extended_asm_add_output_operand(gcc_jit_extended_asm ext_asm,
+					 String asm_symbolic_name,
+					 String constraint,
+					 gcc_jit_lvalue dest);
+
+/* Add an input operand to the extended asm statement.
+   "asm_symbolic_name" can be NULL.
+   "constraint" and "src" must be non-NULL.  */
+
+public static native void gcc_jit_extended_asm_add_input_operand(gcc_jit_extended_asm ext_asm,
+					@Cast("const char*") BytePointer asm_symbolic_name,
+					@Cast("const char*") BytePointer constraint,
+					gcc_jit_rvalue src);
+public static native void gcc_jit_extended_asm_add_input_operand(gcc_jit_extended_asm ext_asm,
+					String asm_symbolic_name,
+					String constraint,
+					gcc_jit_rvalue src);
+
+/* Add "victim" to the list of registers clobbered by the extended
+   asm statement.  It must be non-NULL.  */
+
+public static native void gcc_jit_extended_asm_add_clobber(gcc_jit_extended_asm ext_asm,
+				  @Cast("const char*") BytePointer victim);
+public static native void gcc_jit_extended_asm_add_clobber(gcc_jit_extended_asm ext_asm,
+				  String victim);
+
+/* Add "asm_stmts", a set of top-level asm statements, analogous to
+   those created by GCC's "basic" asm syntax in C at file scope.  */
+
+public static native void gcc_jit_context_add_top_level_asm(gcc_jit_context ctxt,
+				   gcc_jit_location loc,
+				   @Cast("const char*") BytePointer asm_stmts);
+public static native void gcc_jit_context_add_top_level_asm(gcc_jit_context ctxt,
+				   gcc_jit_location loc,
+				   String asm_stmts);
 
 // #ifdef __cplusplus
 // #endif /* __cplusplus */
