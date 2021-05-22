@@ -30,12 +30,12 @@ case $PLATFORM in
       --target=powerpc64le-linux-gnu \
       --prefix=$GCC_INSTALL_PREFIX \
       --enable-checking=release \
-      --enable-languages=jit,c,c++ \
+      --enable-languages=jit \
       --enable-host-shared \
       --disable-bootstrap \
       --disable-multilib \
       --disable-nls
-    make -j 2
+    make -j $MAKEJ
     make install
     ;;
   linux-x86_64)
@@ -49,7 +49,7 @@ case $PLATFORM in
     ../gcc-$GCC_VERSION/configure \
       --prefix=$GCC_INSTALL_PREFIX \
       --enable-checking=release \
-      --enable-languages=jit,c,c++ \
+      --enable-languages=jit \
       --enable-host-shared \
       --disable-bootstrap \
       --disable-multilib \

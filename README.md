@@ -55,9 +55,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.bytedeco:gcc-platform:11.1.0-1.5.5-SNAPSHOT")
-    // JNA required dependency for calling functions by address
-    implementation("net.java.dev.jna:jna:5.5.0")
+    implementation("org.bytedeco:gcc-platform:11.1.0-1.5.6-SNAPSHOT")
+    implementation("org.bytedeco:libffi-platform:3.3-1.5.6-SNAPSHOT")
 }
 
 application {
@@ -65,9 +64,20 @@ application {
 }
 ```
 
+The preset for libffi is a required dependency to call the function addresses
+that we create using the libgccjit library.
+
 The `JitExecution.java` source file
 
 ```java
+import org.bytedeco.gcc.gccjit.*;
+import org.bytedeco.javacpp.*;
+import org.bytedeco.libffi.ffi_cif;
+import org.bytedeco.libffi.ffi_type;
+import org.bytedeco.libffi.global.ffi;
+
+import static org.bytedeco.gcc.global.gccjit.*;
+
 public class JitExecution {
     public static void main(String[] unused) {
         gcc_jit_context ctxt = gcc_jit_context_acquire();
@@ -94,12 +104,22 @@ public class JitExecution {
         gcc_jit_result result = gcc_jit_context_compile(ctxt);
         Pointer addr = gcc_jit_result_get_code(result, "add");
 
-        com.sun.jna.Pointer address = new com.sun.jna.Pointer(addr.address());
-        com.sun.jna.Function func = com.sun.jna.Function.getFunction(address);
+        ffi_cif cif = new ffi_cif();
+        PointerPointer<ffi_type> arguments = new PointerPointer<>(2);
+        PointerPointer<LongPointer> values = new PointerPointer<>(2);
+        LongPointer res = new LongPointer(1);
 
-        Object call_sum = func.invoke(Integer.class, new Object[]{ 10, 20 });
+        arguments.put(0, ffi.ffi_type_sint());
+        arguments.put(1, ffi.ffi_type_sint());
+        values.put(0, new LongPointer(1).put(10));
+        values.put(1, new LongPointer(1).put(20));
 
-        System.out.println("JIT compiling call add(10, 20) result: " + call_sum);
+        if (ffi.ffi_prep_cif(cif, ffi.FFI_DEFAULT_ABI(), 2, ffi.ffi_type_sint(), arguments) != ffi.FFI_OK) {
+            throw new IllegalStateException("Failed to prepare libffi cif");
+        }
+        ffi.ffi_call(cif, addr, res, values);
+
+        System.out.println("Evaluating add(10, 20) with JIT results in: " + res.get());
 
         gcc_jit_result_release(result);
         gcc_jit_context_release(ctxt);

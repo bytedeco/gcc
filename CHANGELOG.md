@@ -1,4 +1,5 @@
 
+- Use libffi presets over JNA for jit execution sample
 - Upgrade preset to GCC 11.1, Add gccjit_extended_asm
 - Upgrade preset to GCC 10.3
 - Update version to 1.5.6-SNAPSHOT
