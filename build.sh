@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-GCC_VERSION=11.1.0
+GCC_VERSION=11.2.0
 
 mkdir -p build/$PLATFORM
 cd build/$PLATFORM
