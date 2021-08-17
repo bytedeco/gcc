@@ -8,4 +8,4 @@ pluginManagement {
 }
 
 rootProject.name = "gcc"
-gradle.rootProject { ext.javacppVersion = '1.5.6-SNAPSHOT' }
+gradle.rootProject { ext.javacppVersion = '1.5.7-SNAPSHOT' }

@@ -55,8 +55,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.bytedeco:gcc-platform:11.1.0-1.5.6-SNAPSHOT")
-    implementation("org.bytedeco:libffi-platform:3.3-1.5.6-SNAPSHOT")
+    implementation("org.bytedeco:gcc-platform:11.1.0-1.5.7-SNAPSHOT")
+    implementation("org.bytedeco:libffi-platform:3.3-1.5.7-SNAPSHOT")
 }
 
 application {
@@ -132,4 +132,3 @@ public class JitExecution {
 
 [javacpp-presets]: https://github.com/bytedeco/javacpp-presets#readme
 [libgccjit]: https://gcc.gnu.org/wiki/JIT
-
